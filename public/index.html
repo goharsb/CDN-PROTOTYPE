@@ -48,8 +48,8 @@
 <body>
     <h2>File Upload and Retrieval</h2>
     <div class="container">
-        <h3>KONG URL Don't add "/" at the end of url</h3><code style="color: red;">required</code>
-        <input id="kong_url" type="text" placeholder="e.g http://127.0.0.1 or http://YOUR_SERVER_IP">
+        <!-- <h3>KONG URL Don't add "/" at the end of url</h3><code style="color: red;">required</code>
+        <input id="kong_url" type="text" placeholder="e.g http://127.0.0.1 or http://YOUR_SERVER_IP"> -->
 
         <h3>Upload File</h3>
         <input type="file" id="fileInput">
@@ -65,11 +65,11 @@
     <script>
         $(document).ready(function() {
             // Upload file using AJAX
+            var url = $(location).attr("href");
             $('#uploadButton').click(function() {
                 var fileInput = $('#fileInput')[0];
                 var file = fileInput.files[0];
                 var formData = new FormData();
-                var url = $('#kong_url').val();
                 formData.append('file', file);
                 
                 $.ajax({
@@ -90,7 +90,6 @@
             // Retrieve file using AJAX
             $('#retrieveButton').click(function() {
                 var filename = $('#filenameInput').val();
-                var url = $('#kong_url').val();
                 $.ajax({
                     url: url.replace(/\/$/, "")+':8000/check', // change ip according to your server
                     type: 'POST',
