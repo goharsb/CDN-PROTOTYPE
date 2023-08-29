@@ -73,7 +73,7 @@
                 formData.append('file', file);
                 
                 $.ajax({
-                    url: url+':8000/cdn', // change ip according to your server
+                    url: url.replace(/\/$/, "")+':8000/cdn', // change ip according to your server
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -92,7 +92,7 @@
                 var filename = $('#filenameInput').val();
                 var url = $('#kong_url').val();
                 $.ajax({
-                    url: url+':8000/check', // change ip according to your server
+                    url: url.replace(/\/$/, "")+':8000/check', // change ip according to your server
                     type: 'POST',
                     data: { filename: filename },
                     success: function(response) {
