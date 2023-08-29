@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload and Retrieval</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            width: 80%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        input[type="file"],
+        input[type="text"],
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>File Upload and Retrieval</h2>
+    <div class="container">
+        <h3>KONG URL</h3><code style="color: red;">required</code>
+        <input id="kong_url" type="text" placeholder="e.g http://127.0.0.1 or http://localhost">
+
+        <h3>Upload File</h3>
+        <input type="file" id="fileInput">
+        <button id="uploadButton">Upload</button>
+        <p id="uploadResult"></p>
+        
+        <h3 style="margin-top: 50px;">Retrieve File</h3>
+        <input type="text" id="filenameInput" placeholder="Enter filename">
+        <button id="retrieveButton">Retrieve</button>
+        <p id="retrieveResult"></p>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            // Upload file using AJAX
+            $('#uploadButton').click(function() {
+                var fileInput = $('#fileInput')[0];
+                var file = fileInput.files[0];
+                var formData = new FormData();
+                var url = $('#kong_url').val();
+                formData.append('file', file);
+                
+                $.ajax({
+                    url: url+':8000/cdn', // change ip according to your server
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#uploadResult').text(response);
+                    },
+                    error: function(error) {
+                        $('#uploadResult').text('Error uploading file.');
+                    }
+                });
+            });
+            
+            // Retrieve file using AJAX
+            $('#retrieveButton').click(function() {
+                var filename = $('#filenameInput').val();
+                var url = $('#kong_url').val();
+                $.ajax({
+                    url: url+':8000/check', // change ip according to your server
+                    type: 'POST',
+                    data: { filename: filename },
+                    success: function(response) {
+                        $('#retrieveResult').text(response);
+                    },
+                    error: function(error) {
+                        $('#retrieveResult').text('Error retrieving file.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

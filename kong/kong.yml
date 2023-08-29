@@ -1,0 +1,57 @@
+_format_version: "3.0"
+_transform: true
+ 
+services:
+  - host: host.docker.internal
+    name: serve-file
+    port: 80
+    path: /assets
+    protocol: http
+    routes:
+    - name: serve-route
+      methods:
+      - GET
+      paths:
+      - /
+      strip_path: true
+
+  - host: host.docker.internal
+    name: upload-file
+    port: 8080
+    path: /upload
+    protocol: http
+    routes:
+    - name: upload-route
+      methods:
+      - POST
+      paths:
+      - /cdn
+      strip_path: true
+
+  - host: host.docker.internal
+    name: retrieve-file
+    port: 8080
+    path: /retrieve
+    protocol: http
+    routes:
+    - name: retrieve-route
+      methods:
+      - POST
+      paths:
+      - /check
+      strip_path: true
+plugins:
+  - name: cors
+    config:
+      origins: 
+        - "*"
+      methods: 
+        - GET
+        - POST
+      headers: 
+        - Content-Type
+        - Authorization
+      exposed_headers: 
+        - X-Custom-Header
+      credentials: true
+      max_age: 3600

@@ -1,0 +1,63 @@
+version: '3'
+services:
+  # kong-database:
+  #   image: postgres:13
+  #   container_name: kong-database
+  #   environment:
+  #     POSTGRES_DB: kong
+  #     POSTGRES_USER: kong
+  #     POSTGRES_PASSWORD: kong
+  #   ports:
+  #     - "5432:5432"
+  #   network_mode: kong-net
+
+  kong:
+    image: kong/kong-gateway:3.4.0.0
+    container_name: kong-gateway
+    depends_on:
+      - python-server
+      - public-app
+    # build:
+    #   context: ./kong
+    #   dockerfile: Dockerfile.kong
+    environment:
+      KONG_DATABASE: off
+      KONG_DECLARATIVE_CONFIG: /etc/kong/kong.yml
+      # KONG_DATABASE: postgres
+      # KONG_PG_HOST: kong-database
+      # KONG_PG_USER: kong
+      # KONG_PG_PASSWORD: kong
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      #KONG_ADMIN_GUI_URL: http://localhost:8002
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+      - "8002:8002"
+      - "8445:8445"
+      - "8003:8003"
+      - "8004:8004"
+    volumes:
+      - ./kong:/etc/kong/
+    network_mode: kong-net
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+  public-app:
+    build:
+      context: ./public
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./public/assets:/public/assets
+  
+  python-server:
+    build:
+      context: ./python
+      dockerfile: Dockerfile.python
+    network_mode: host
+    volumes:
+      - ./public/assets:/app/assets
+  

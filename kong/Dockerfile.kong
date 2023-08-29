@@ -1,0 +1,8 @@
+# use this config if you are running kong in DB mode also make sure
+# to un comment Build in docker-compose.yml
+
+# Use the official Kong image as the base image
+FROM kong/kong-gateway:3.4.0.0
+
+# Specify the command to execute when the container starts
+CMD sleep 10 && kong migrations bootstrap && sleep 10 && kong start
