@@ -9,7 +9,7 @@ In this prototype im using Docker containers for **kong gateway, python server a
 
 ## INSTALLATION
 1. Install Docker on your system 
-```shell
+```console
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh --dry-run
 ```
