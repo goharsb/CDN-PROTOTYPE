@@ -5,8 +5,12 @@ In this prototype im using Docker containers for **kong gateway, python server a
 
 ## REQUIREMENTS
 * DOCKER
+* Ubuntu 22.04.3 LTS
 
-
-
-
+## INSTALLATION
+1. Install Docker on your system 
+```shell
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh --dry-run
+```
 
