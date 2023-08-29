@@ -14,17 +14,17 @@ from uploading to retrival and serving of file to public is all passing through 
 Just follow the instruction below for successfull implementation of CDN PROTOTYPE for both localhost and server.
 1. Installing Docker
     ```shell
-     $ curl -fsSL https://get.docker.com -o get-docker.sh
-     $ sudo sh ./get-docker.sh
+      curl -fsSL https://get.docker.com -o get-docker.sh
+      sudo sh ./get-docker.sh
     ```
     make sure docker is by run the following command.
     ```shell
-     $ docker -v
+      docker -v
     ```
 2. Setting up the prototype
     clone git respository by running the following command.
     ```shell
-     $ git clone https://github.com/goharsb/cdn-prototype
+      git clone https://github.com/goharsb/cdn-prototype
     ```
     **(OPTIONAL)** if you want to run this prototype on server you need to provide ip of your server in file **Dockerfile.python** located at **cdn-prototype/python/Dockerfile.python**. For example if your server ip is **143.198.146.23** then change the following line.
         
@@ -36,13 +36,13 @@ Just follow the instruction below for successfull implementation of CDN PROTOTYP
     
 3. Running the prototype
 
-   we need to create network for kong gateway
+   we need to create network for kong gateway run the following command
     ```shell
-     $ docker network create kong-net
+      docker network create kong-net
     ```
-    after creating network run change you current directory to the **cdn-prototype** as **docker-compose.yml** located there.
+    after creating network, run the following to change you current directory to the **cdn-prototype** as **docker-compose.yml** located there.
     ```shell
-     $ cd cdn-prototype
+      cd cdn-prototype
     ```
 
     **(OPTIONAL)** if you want to use **KONG MANAGER** then uncomment the following line in **docker-compose.yml** and change localhost to your server IP if you are running on server then your MANAGER will be accessable at **http://YOUR_IP:8002**
@@ -77,8 +77,9 @@ For testing you can use two types of methods
 3. HOW TO STOP ALL CONTAINERS
      * First press CTRL+C if you are not in deatached mode
       ```shell
-       $ docker stop $(docker ps -aq)
-       $ docker rm $(docker ps -aq)
+        docker stop $(docker ps -aq)
+        docker rm $(docker ps -aq)
+        docker network rm kong-net
       ```
 
 
