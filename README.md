@@ -50,11 +50,11 @@ Just follow the instruction below for successfull implementation of CDN PROTOTYP
     
     then compose the container by running following command .
     ```shell
-    $ docker compose up --build
+     docker compose up --build
     ```
     for deattached mode
     ```shell
-    $ docker compose up --build -d
+     docker compose up --build -d
     ```  	
     after all the containers are up you can access **KONG ADMIN** at port **http://YOUR_IP:8001** and **PYTHON SERVER** at **http://YOUR_IP:8080**.
 
